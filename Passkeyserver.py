@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
+import os  # Import os to access environment variables
 
 app = Flask(__name__)
 
+# Sample license keys for validation
 license_keys = {"VALID-KEY-123": True, "VALID-KEY-456": True}
 
 @app.route('/validate_key', methods=['GET'])
@@ -21,4 +23,5 @@ def deactivate_key():
     return jsonify({"status": "key not found"}), 404
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Run the app on all available interfaces on the specified port
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)), debug=False)
